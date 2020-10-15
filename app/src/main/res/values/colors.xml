@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <!--My Color - MyTheme1-->
+    <color name="myPrimary1">#3282b8</color>
+    <color name="myPrimaryDark1">#0f4c75</color>
+    <color name="myText1">#1b262c</color>
+    <color name="myTextLight1">#FFFFFF</color>
+    <color name="myLightBackground1">#bbe1fa</color>
+    <color name="myTransparent1">#8c128C7E</color>
+    <color name="myLayoutColor1">#EEEEEE</color>
+</resources>
