@@ -2,6 +2,7 @@ package com.hakim.appto_dolist.modul.list_todo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,12 +17,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hakim.appto_dolist.R;
 import com.hakim.appto_dolist.base.BaseFragment;
+import com.hakim.appto_dolist.data.model.Task;
+import com.hakim.appto_dolist.modul.edit_list_todo.EditListToDoActivity;
 import com.hakim.appto_dolist.modul.form_todo.FormToDoActivity;
 import com.hakim.appto_dolist.modul.login.LoginActivity;
+import com.hakim.appto_dolist.modul.new_list_todo.NewListToDoActivity;
 import com.hakim.appto_dolist.modul.profile.ProfileActivity;
+import com.hakim.appto_dolist.utils.RecyclerViewAdapterTodolist;
+
+import java.util.ArrayList;
 
 //import com.hakim.belajaractivity.FirstActivity;
 
@@ -34,6 +44,9 @@ public class ListToDoFragment extends BaseFragment<ListToDoActivity, ListToDoCon
 
     Bundle profile;
     Button btAddNew;
+    RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public ListToDoFragment() {
     }
@@ -43,21 +56,41 @@ public class ListToDoFragment extends BaseFragment<ListToDoActivity, ListToDoCon
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         fragmentView = inflater.inflate(R.layout.fragment_lists_todo, container, false);
-        Toolbar toolbar = ((ListToDoActivity) getActivity()).getToolbar();
+        //Toolbar toolbar = ((ListToDoActivity) getActivity()).getToolbar();
         //((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
         mPresenter = new ListToDoPresenter(this);
         mPresenter.start();
-        btAddNew = fragmentView.findViewById(R.id.bt_addNewLists);
 
         profile = getActivity().getIntent().getExtras();
 
+        mRecyclerView = fragmentView.findViewById(R.id.recyclerViewTodolist);
+        mRecyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(activity);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        final ArrayList<Task> data = mPresenter.getDataSet();
+        mAdapter = new RecyclerViewAdapterTodolist(data);
+        mRecyclerView.setAdapter(mAdapter);
+
+        Log.d("Data", "Data : ++++++++++++++++++++++++++++++++++");
+        Log.d("Data 1", data.get(3).getTitle());
+
         setTitle("To-Do List");
 
+        btAddNew = fragmentView.findViewById(R.id.bt_addNewLists);
         btAddNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                redirectToForm();
+                gotoNewTask();
+            }
+        });
+
+        ((RecyclerViewAdapterTodolist) mAdapter).setOnItemClickListener(new RecyclerViewAdapterTodolist.MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                String id = data.get(position).getId();
+                Log.d("BELAJAR ACTIVITY",">>>>>"+ position);
+                editTask(id);
             }
         });
 
@@ -99,6 +132,18 @@ public class ListToDoFragment extends BaseFragment<ListToDoActivity, ListToDoCon
 
         startActivity(intent);
         activity.finish();
+    }
+
+    @Override
+    public void gotoNewTask() {
+        Intent intent = new Intent(activity, NewListToDoActivity.class);
+        startActivity(intent);
+    }
+
+    public void editTask(String id) {
+        Intent intent = new Intent(activity, EditListToDoActivity.class);
+        intent.putExtra("TaskId", id);
+        startActivity(intent);
     }
 
 }

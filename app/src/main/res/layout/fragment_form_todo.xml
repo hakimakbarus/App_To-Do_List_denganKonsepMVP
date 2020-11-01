@@ -51,7 +51,7 @@
                 android:layout_height="match_parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tif_keterangan"
+                    android:id="@+id/tif_deskripsi"
                     android:layout_width="match_parent"
                     android:layout_height="220dp"
                     android:hint="Masukkan Keterangan"

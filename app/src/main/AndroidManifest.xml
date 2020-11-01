@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyTheme1">
+        <activity android:name=".modul.edit_list_todo.EditListToDoActivity"></activity>
+        <activity android:name=".modul.new_list_todo.NewListToDoActivity"></activity>
         <activity android:name=".modul.form_todo.FormToDoActivity"></activity>
         <activity android:name=".modul.list_todo.ListToDoActivity"></activity>
         <activity android:name=".modul.profile.ProfileActivity"></activity>
